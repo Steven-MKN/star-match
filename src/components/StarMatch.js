@@ -12,14 +12,36 @@ const StarMatch = () => {
   const candidatesAreWrong = utils.sum(candidateNums) > stars;
 
   const numberStatus = (number) => {
-    if (!availableNumbers.includes(number)){
+    if (!availableNumbers.includes(number)) {
       return 'used';
-    } 
-    if (candidateNums.includes(number)){
+    }
+    if (candidateNums.includes(number)) {
       return candidatesAreWrong ? 'wrong' : 'candidate';
     }
     return 'available';
   };
+
+  const onNumberClick = (number, currentStatus) => {
+    if (currentStatus == 'used') {
+      return;
+    }
+
+    // candidateNums
+    const newCandidateNums =
+      currentStatus === 'available' ? candidateNums.concat(number) 
+      : candidateNums.filter(cn => cn !== number);
+
+    if (utils.sum(newCandidateNums) !== stars) {
+      setCandidateNums(newCandidateNums);
+    } else {
+      const newAvailableNums = availableNumbers.filter(
+        n => !newCandidateNums.includes(n)
+      );
+      setStars(utils.randomSumIn(newAvailableNums, 9));
+      setAvailableNums(newAvailableNums);
+      setCandidateNums([]);
+    }
+  }
 
   return (
     <div className="game">
@@ -36,6 +58,7 @@ const StarMatch = () => {
               <PlayNumber
                 key={number}
                 number={number}
+                onClick={onNumberClick}
                 status={numberStatus(number)}
               />
             )
