@@ -4,7 +4,7 @@ import PlayNumber from './PlayNumber';
 import StarsDisplay from './StarsDisplay';
 import PlayAgain from './PlayAgain';
 
-const StarMatch = () => {
+const StarMatch = (props) => {
 
   const [stars, setStars] = useState(utils.random(1, 9));
   const [availableNumbers, setAvailableNums] = useState(utils.range(1, 9));
@@ -26,13 +26,6 @@ const StarMatch = () => {
   const gameStatus = availableNumbers.length === 0 ? 'won'
     : secondsLeft === 0 ? 'lost'
       : 'active';
-
-  const resetGame = () => {
-    setSecondsLeft(10);
-    setStars(utils.random(1, 9));
-    setAvailableNums(utils.range(1, 9));
-    setCandidateNums([]);
-  }
 
   const numberStatus = (number) => {
     if (!availableNumbers.includes(number)) {
@@ -74,7 +67,7 @@ const StarMatch = () => {
       <div className="body">
         <div className="left">
           {
-            gameStatus !== 'active' ? <PlayAgain onClick={resetGame} gameStatus={gameStatus} />
+            gameStatus !== 'active' ? <PlayAgain onClick={props.startNewGame} gameStatus={gameStatus} />
               : <StarsDisplay count={stars} />
           }
         </div>

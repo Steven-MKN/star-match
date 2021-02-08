@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import StarMatch from './components/StarMatch';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <StarMatch />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
